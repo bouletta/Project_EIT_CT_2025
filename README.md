@@ -11,7 +11,7 @@ The project contains both Python and MATLAB code.  Python is used for CT process
 ├── Example_driver.m             # MATLAB script demonstrating mesh loading and simulation
 ├── Example_load_mesh.ipynb      # Jupyter notebook that loads pre‑computed meshes, visualises them and solves forward/inverse EIT problems
 ├── Example_meshing.ipynb        # Jupyter notebook that builds meshes from CT segmentations using pygalmesh
-├── Driver_test_OOEIT.m          # MATLAB driver showing a test of the OOEIT solver (outer orthogonal EIT)
+├── Driver_test_OOEIT.m          # MATLAB driver implementing solution by search, and comparing to a few inverse solvers of OOEIT (outer orthogonal EIT)
 ├── requirements.txt             # Python dependencies (except pygalmesh)
 ├── src/                         # Python modules for CT processing, meshing and EIT simulation
 │   ├── CT_processing_functions.py   # CT mask extraction, hole filling and connected‑component helpers
@@ -22,7 +22,7 @@ The project contains both Python and MATLAB code.  Python is used for CT process
 │   └── __init__.py
 ├── src_aatae/                    # Additional Python drivers for reconstruction/search experiments
 │   ├── Driver_Reconstruct.py        # Example script that searches a library of pre‑computed meshes for similar EIT measurements
-│   ├── Driver_for_matlab.py         # Wrapper for calling Python reconstruction from MATLAB
+│   ├── Driver_for_matlab.py         # Script for generating MATLAB data files of meshes out of `.pkl` ones  from Python
 │   └── __init__.py
 └── src_mat/                     # MATLAB functions used by the project
     ├── Sig_update.m                 # Update conductivity values by organ label
@@ -57,6 +57,39 @@ pip install -r requirements.txt
 Mesh generation in this project uses [pygalmesh](https://github.com/meshpro/pygalmesh), a Python wrapper around CGAL.  Installing pygalmesh requires a C++14 compiler and the CGAL/Eigen libraries.  On Linux or macOS this is straightforward; on Windows it is more involved.  You can follow the instructions from this StackOverflow answer for Windows users: [“How does one install pygalmesh which depends on Eigen on a Windows PC?”](https://stackoverflow.com/questions/61472028/how-does-one-install-pygalmesh-which-depends-on-eigen-on-a-windows-pc).  Alternatively, run the notebooks in a Linux/WSL environment where `conda install -c conda‑forge cgal cgal-cpp boost eigen` followed by `pip install pygalmesh` works out of the box.
 
 If you do not wish to use pygalmesh, you can replace it with another mesher (e.g. [pygmsh](https://github.com/pygmsh/pygmsh) + Gmsh), but the example notebooks assume pygalmesh is available.
+
+
+
+
+
+
+#### 3. MATLAB: Installing DistMesh and OOEIT
+
+#####  Install DistMesh (2D mesh generator)
+DistMesh is used to generate MATLAB-based triangular meshes.
+
+Download from the official website:  
+🔗 http://persson.berkeley.edu/distmesh/
+
+Add the DistMesh folder to your MATLAB path:
+
+addpath(genpath('path/to/distmesh'))
+##### Install OOEIT 
+
+OOEIT provides MATLAB forward and inverse EIT solvers (FEM, CEM model, reconstruction tools).  
+It is required if you want to run the MATLAB drivers located in `src_mat/`.
+
+
+Clone the official repository:
+
+```git clone https://github.com/EIT-team/OOEIT.git```
+Add it to your MATLAB path: ```addpath(genpath('path/to/OOEIT'))```
+
+
+
+
+
+
 
 ### Data Setup
 
