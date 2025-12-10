@@ -1,10 +1,9 @@
 numpy
-pandas
+scipy
+matplotlib
 nibabel
 scikit-image
-matplotlib
-seaborn
-trimesh
-plotly
-pymeshlab
-scipy
+shapely
+imageio
+pyeit
+numba
